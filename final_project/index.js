@@ -21,12 +21,12 @@ app.use(
 app.use("/customer/auth/*", function auth(req, res, next) {
     // if the user is already authorized
     if (req.session.authorization) {
-        const token = req.session.authorization[accessToken];
+        const token = req.session.authorization["accessToken"]; // .accessToken
         jwt.verify(token, "access", (err, user) => {
             if (err) {
                 res.status(403).json({ msg: "User is not authenticated!" });
             } else {
-                res.user = user;
+                req.user = user;
                 // pass to the next route
                 next();
             }
