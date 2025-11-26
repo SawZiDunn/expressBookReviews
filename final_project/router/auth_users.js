@@ -8,7 +8,7 @@ let users = [];
 const isValid = (username) => {
     for (const user of users) {
         if (user.username === username) {
-            // we cannot use forEach here since it canno break the loop
+            // cannot use forEach since it canno break the loop
             return true; // returns false and breaks the loop as soon as the condition is met
         }
     }
@@ -16,11 +16,8 @@ const isValid = (username) => {
 };
 
 const authenticatedUser = (username, password) => {
-    // console.log(username, password);
-    // console.log(users);
     for (const user of users) {
         if (user.username === username && user.password === password) {
-            // we cannot use forEach here since it canno break the loop
             return true; // returns true and breaks the loop as soon as the condition is met
         }
     }
@@ -36,7 +33,6 @@ regd_users.post("/login", (req, res) => {
             .json({ message: "Username or password is not provided!" });
     }
 
-    console.log(authenticatedUser(username, password));
     if (authenticatedUser(username, password)) {
         const accessToken = jwt.sign({ username }, "access", {
             expiresIn: 60 * 60,

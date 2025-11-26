@@ -52,7 +52,7 @@ public_users.get("/author/:author", function (req, res) {
     //     }
     // });
 
-    // get key-value pairs in an array using Object.entries()
+    // get [ [k0, v0], [k1,v1] ] using Object.entries()
     // filter according to the matched author, array destructuring is used
     // reduce() accepts a callback and initial value for result
     let filteredBooks = Object.entries(books)
@@ -64,7 +64,7 @@ public_users.get("/author/:author", function (req, res) {
 
     if (Object.keys(filteredBooks).length === 0) {
         return res.status(404).json({
-            message: `No books found with the title: "${title}"`,
+            message: `No books found for this author: "${author}"`,
         });
     }
 
@@ -74,14 +74,11 @@ public_users.get("/author/:author", function (req, res) {
 // Get all books based on title
 public_users.get("/title/:title", function (req, res) {
     const title = req.params.title;
-    console.log(title);
 
     let filteredBooks = Object.entries(books)
         .filter(([k, v]) => v.title === title)
-        .reduce((result, [key, value]) => {
-            result[key] = value;
-            return result;
-        }, {});
+        .reduce((result, [key, value]) => (result[key] = value), {});
+
     return res.status(300).json({ filteredBooks });
 });
 
